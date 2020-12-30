@@ -1,0 +1,10 @@
+<div>
+    <app-vertical-bar class="array-container" [ngStyle]="getBarContainerStyles()"
+        *ngFor="let element of array"
+        [element]="element"
+        [max]="max"
+        [arrSize]="arrSize"
+        >
+    </app-vertical-bar>
+    <!-- <app-vertical-bar></app-vertical-bar> -->
+</div>

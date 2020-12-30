@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-array-container',
-  templateUrl: './array-container.component.html',
-  styleUrls: ['./array-container.component.css']
+  selector: 'app-array-of-bars',
+  templateUrl: './array-of-bars.component.html',
+  styleUrls: ['./array-of-bars.component.css']
 })
-export class ArrayContainerComponent implements OnInit {
-  numElements: number = 0; 
+export class ArrayOfBarsComponent implements OnInit {
+  arrSize: number = 0; 
   array: number[] = []; // initialize array 
   max: number = Number.MAX_VALUE; 
   constructor() { }
 
   ngOnInit(): void {
-    this.numElements = this.getRandomIntInclusive(20, 300);
+    this.arrSize = this.getRandomIntInclusive(20, 300);
     // console.log(this.numElements);
     // this.array = [65, 22, 33, 45, 12];
     this.createArray(); // populates this.array
@@ -29,7 +29,7 @@ export class ArrayContainerComponent implements OnInit {
   }
 
   createArray() {
-    for (let i = 0; i < this.numElements; i++) {
+    for (let i = 0; i < this.arrSize; i++) {
       this.array[i] = this.getRandomIntInclusive(0, 100);
     }
   }
@@ -37,9 +37,8 @@ export class ArrayContainerComponent implements OnInit {
   // makes each bar to have variable width, depending on the number of elts in the array
   getBarContainerStyles() {
     let styles = {
-      width : `${100/this.numElements}%`
+      width : `${100/this.arrSize}%`
     }
     return styles;
   }
-
 }

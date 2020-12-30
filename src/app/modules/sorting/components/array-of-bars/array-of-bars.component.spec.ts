@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SortingVisualComponent } from './sorting-visual.component';
+import { ArrayOfBarsComponent } from './array-of-bars.component';
 
-describe('SortingVisualComponent', () => {
-  let component: SortingVisualComponent;
-  let fixture: ComponentFixture<SortingVisualComponent>;
+describe('ArrayOfBarsComponent', () => {
+  let component: ArrayOfBarsComponent;
+  let fixture: ComponentFixture<ArrayOfBarsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SortingVisualComponent ]
+      declarations: [ ArrayOfBarsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SortingVisualComponent);
+    fixture = TestBed.createComponent(ArrayOfBarsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ArrayContainerComponent } from './array-container.component';
+import { VerticalBarComponent } from './vertical-bar.component';
 
-describe('ArrayContainerComponent', () => {
-  let component: ArrayContainerComponent;
-  let fixture: ComponentFixture<ArrayContainerComponent>;
+describe('VerticalBarComponent', () => {
+  let component: VerticalBarComponent;
+  let fixture: ComponentFixture<VerticalBarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ArrayContainerComponent ]
+      declarations: [ VerticalBarComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ArrayContainerComponent);
+    fixture = TestBed.createComponent(VerticalBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
