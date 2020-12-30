@@ -1,1 +1,9 @@
-<p>array-container works!</p>
+<div>
+    <app-array-bar class="array-container" [ngStyles]="getBarContainerStyles()"
+        *ngFor="let element of array"
+        [element]="element"
+        [max]="max"
+        [numElements]="numElements"
+        >
+    </app-array-bar>
+</div>

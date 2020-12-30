@@ -1,0 +1,18 @@
+
+
+.array-container {
+    /* margin: auto; */
+    display: flex;
+    float: left;
+    flex-direction: row;
+    flex-wrap: nowrap;  /* TODO Is this necessary? */
+    text-align: center;
+    justify-content: space-around;
+    /* position: absolute; */
+    height: 40vh;   /*final: set to occupy 60% of view-height*/
+    /* background-color: rgba(72, 90, 90, 0.295); */
+    /* position: relative; */
+    align-items: flex-end;
+}
+
+
