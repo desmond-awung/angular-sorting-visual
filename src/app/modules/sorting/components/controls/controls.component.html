@@ -1,12 +1,12 @@
 <div class="row" id="controls-bar">
-    <div class="col-md-8">
+    <div class="col-md-4">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link active" role="button" (click)="setArrParams({isRandom: true})"> Random Array & Random Size </a>
+                <a class="nav-link" type="button" class="btn btn-outline-primary" (click)="setArrParams({isRandom: true})"> Generate Random Array </a>
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More Options</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">More Array Options</a>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="#">Random Array of specific size</a>
                   <a class="dropdown-item" href="#">Enter Array Input</a>
@@ -15,11 +15,28 @@
                 </div>   
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link"> Sort Array</a>
-            </li>
-
-
         </ul>
     </div>
+
+    <!-- right side of controls bar -->
+    <div class="col-md-8">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" type="button" class="btn btn-outline-info" (click)="sortArray(MySortType.SelectionSort)">Selection Sort</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" type="button" class="btn btn-outline-info" (click)="sortArray(MySortType.BubbleSort)">Bubble Sort</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" type="button" class="btn btn-outline-info" (click)="sortArray(MySortType.InsertionSort)">Insertion Sort</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" type="button" class="btn btn-outline-info" (click)="sortArray(MySortType.MergeSort)">Merge Sort</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" type="button" class="btn btn-outline-info" (click)="sortArray(MySortType.QuickSort)">Quick Sort</a>
+            </li>
+        </ul>
+    </div>
+
 </div>
