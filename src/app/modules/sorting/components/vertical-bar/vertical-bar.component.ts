@@ -9,7 +9,7 @@ export class VerticalBarComponent implements OnInit {
   
   @Input() element : number = 0;  // taking from parent
   @Input() max : number = Number.MAX_VALUE;  // taking from parent. Init to max possible value
-  @Input() arrSize: number = 1;
+  @Input() arraySize: number = 1;
 
   constructor() { }
 
@@ -25,8 +25,8 @@ export class VerticalBarComponent implements OnInit {
       // color: 'red',
       // width: `${(100/this.numElements)}%`, 
       // width: '80%', 
-      width: `${50/(this.arrSize+1)}rem`, 
-      margin: `0 ${10/(this.arrSize+1)}rem`, // this works for a max of 200 elts on a medium screen just fine
+      width: `${50/(this.arraySize+1)}rem`, 
+      margin: `0 ${10/(this.arraySize+1)}rem`, // this works for a max of 200 elts on a medium screen just fine
       backgroundColor: 'turquoise',
       /* border: 0.5px solid black; */
       /* border: 2px solid red; */
