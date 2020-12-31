@@ -8,6 +8,8 @@ import { UserArrParamsService } from '../../services/user-arr-params.service';
   styleUrls: ['./array-of-bars.component.css']
 })
 export class ArrayOfBarsComponent implements OnInit {
+  // msgRcvd: string = "";
+  msgRcvd: UserParams = {};
   arrParams: UserParams = new UserParams();
 
   arraySize: number = 0; 
@@ -17,13 +19,29 @@ export class ArrayOfBarsComponent implements OnInit {
   constructor(private paramsService: UserArrParamsService) { }
 
   ngOnInit(): void {
-    console.log("New userParams value:");
-    this.paramsService.currentUserParams.subscribe(params => this.arrParams = params);
-    console.log(this.arrParams);
-    
+    // these line run on app init
+    this.resetArrParams();
+    // console.log(this.arrParams);   
+
+    // this.paramsService.currentUserParams.subscribe(params => this.arrParams = params);
+    this.paramsService.currentUserParams.subscribe(params => {
+      console.log("New userParams value:");
+      this.arrParams = params;
+      this.resetArrParams();
+
+    });
+  }
+
+
+  resetArrParams() {
+    this.arraySize = 0; 
+    this.array = []; // initialize array 
+    this.max = Number.MAX_VALUE; 
+    console.log("Reset params called");
     if (this.arrParams.arrSize === -1) {
       // user did not provide the array size: randomly generate the size 
-      this.arraySize = this.getRandomIntInclusive(20, 300);
+      this.arraySize = this.getRandomIntInclusive(20, 300);  
+      // this.arraySize = 140;   // XXX
     }
     // console.log(this.numElements);
     // this.array = [65, 22, 33, 45, 12];
@@ -37,6 +55,7 @@ export class ArrayOfBarsComponent implements OnInit {
     this.max = Math.max(...this.array);
   }
 
+
   // from MDN reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#Getting_a_random_integer_between_two_values_inclusive
   getRandomIntInclusive(min: number, max: number): number {
     min = Math.ceil(min);
@@ -44,11 +63,13 @@ export class ArrayOfBarsComponent implements OnInit {
     return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
   }
 
+
   createArray() {
     for (let i = 0; i < this.arraySize; i++) {
       this.array[i] = this.getRandomIntInclusive(0, 100);
     }
   }
+
 
   // makes each bar to have variable width, depending on the number of elts in the array
   getBarContainerStyles() {

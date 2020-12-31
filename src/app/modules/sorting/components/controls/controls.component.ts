@@ -10,6 +10,7 @@ import { UserParams } from '../../models/UserParams'
   styleUrls: ['./controls.component.css']
 })
 export class ControlsComponent implements OnInit {
+  msg: UserParams = {};
   // array params entered by user
   /**
    * isRandom: does user want to generate an array with random elements in it? (defaults to true if not provided)
@@ -23,7 +24,8 @@ export class ControlsComponent implements OnInit {
   constructor(private paramsService: UserArrParamsService) { }
 
   ngOnInit(): void {
-    this.paramsService.currentUserParams.subscribe(params => this.arrParams = params);
+    // this.paramsService.currentUserParams.subscribe(params => this.arrParams = params);
+    this.paramsService.currentUserParams.subscribe(params => this.msg = params);
   }
 
   // default: isRandom=true, arrSize=-1
@@ -43,7 +45,11 @@ export class ControlsComponent implements OnInit {
     console.log(this.arrParams);
     // share this object via a service to other conponents
     // this.initArray.emit(this.arrParams);
-    this.paramsService.changeUserParams(this.arrParams);
+    // this.paramsService.changeUserParams(this.arrParams);
+    // this.msg = "Masteeeeer"
+    this.msg = this.arrParams;
+    // this.msg.isRandom = false;
+    this.paramsService.changeUserParams(this.msg);
 
   }
 
