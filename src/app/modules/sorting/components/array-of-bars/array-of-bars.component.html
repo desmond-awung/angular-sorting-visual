@@ -1,9 +1,12 @@
 <div>
     <app-vertical-bar class="array-container" [ngStyle]="getBarContainerStyles()"
-        *ngFor="let element of array"
+        *ngFor="let element of array; let currIndex = index"
         [element]="element"
         [max]="max"
+        [idx]="currIndex"
         [arraySize]="arraySize"
+        [events]="colorEvent.asObservable()"
+        (handleColorChange)="onColorUpdate($event)"
         >
     </app-vertical-bar>
     {{ arraySize }}

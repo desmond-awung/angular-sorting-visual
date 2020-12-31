@@ -1,3 +1,5 @@
+// reference from article by Dr. Axel Rauschmayer
+// https://2ality.com/2020/01/enum-pattern.html#the-enum-pattern
 class SortType {
     name: string;
     static BubbleSort = new SortType('BubbleSort');

@@ -1,28 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { UserArrParamsService } from '../../services/user-arr-params.service';
 import { SortTypeService } from "../../services/sort-type.service";
 // models
 import { UserParams } from '../../models/UserParams';
 import { SortType } from "../../models/SortType";
-
+import { Subject } from 'rxjs';
+// child elt
+import { VerticalBarComponent } from "../vertical-bar/vertical-bar.component";
 
 @Component({
 	selector: 'app-array-of-bars',
 	templateUrl: './array-of-bars.component.html',
 	styleUrls: ['./array-of-bars.component.css']
 })
-export class ArrayOfBarsComponent implements OnInit {
+export class ArrayOfBarsComponent implements OnInit, AfterViewInit {
+	colorEvent: Subject<number> = new Subject<number>();
 	// msgRcvd: string = "";
 	msgRcvd: UserParams = {};
 	arrParams: UserParams = new UserParams();
-
+	currIndex: number = 0;
 	arraySize: number = 0;
 	array: number[] = []; // initialize array 
 	max: number = Number.MAX_VALUE;
+	// color = 'turquoise';
+
+	@ViewChild(VerticalBarComponent) singleBar: VerticalBarComponent = new VerticalBarComponent;
+	ngAfterViewInit() {
+		// console.log(this.singleBar.defaultColor);
+		this.singleBar.setVerticalBarStyles(this.currIndex, 'red')
+	}
 
 	constructor(private paramsService: UserArrParamsService, private sortTypeService: SortTypeService) { }
 
 	ngOnInit(): void {
+		console.log("$$$Entering array-of-bars component");
+		
 		// these line run on app init
 		this.resetArrParams();
 		// console.log(this.arrParams);   
@@ -40,19 +52,19 @@ export class ArrayOfBarsComponent implements OnInit {
 			this.setSortType(sortType);
 
 		})
-
 	}
 
 
 	resetArrParams() {
+		// this.color = 'turquoise';
 		this.arraySize = 0;
 		this.array = []; // initialize array 
 		this.max = Number.MAX_VALUE;
 		console.log("Reset params called");
 		if (this.arrParams.arrSize === -1) {
 			// user did not provide the array size: randomly generate the size 
-			this.arraySize = this.getRandomIntInclusive(20, 300);
-			// this.arraySize = 10;   // XXX
+			// this.arraySize = this.getRandomIntInclusive(20, 300);
+			this.arraySize = 10;   // XXX
 		}
 		// console.log(this.numElements);
 		// this.array = [65, 22, 33, 45, 12];
@@ -67,6 +79,8 @@ export class ArrayOfBarsComponent implements OnInit {
 	}
 
 	setSortType(type: SortType) {
+		// XXX
+		// this.changeSingleBarColor("red");
 		console.log(`Finally: Sort Type is ${type.name} `);
 		console.log(`Array before: ${this.array}`);		
 
@@ -147,10 +161,14 @@ export class ArrayOfBarsComponent implements OnInit {
 		for (let i = 0; i < size-1; i++) {
 			let min = this.array[i];
 			let minIndex = i;
+			this.currIndex = i;
+			this.ngAfterViewInit();
+			// this.color = 'red';
+			// setTimeout(() => {}, 2000)
+			if (i === 3)
+				this.sleep(5000);
 
 			for (let j=i+1; j<size; j++ ) {
-				// optimize: exit if I am the min
-
 				// find the min and its index
 				if (this.array[j] < min) {
 					min = this.array[j];
@@ -164,11 +182,31 @@ export class ArrayOfBarsComponent implements OnInit {
 			temp = this.array[i];
 			this.array[i] = this.array[minIndex];
 			this.array[minIndex] = temp;
-			// console.log(` >> Current Arr is: ${this.array}`);
+			console.log(` >> Current Arr is: ${this.array}`);
+			// this.color = 'turquoise';
+			this.changeSingleBarColor(i);
+			// setTimeout(() => {console.log("Hi");}, 2000)
 			
 		}
+	}
 
+	changeSingleBarColor(index: number) {
+		console.log("Change color started");
+		 // 
+		this.colorEvent.next(index);
+	}
 
+	sleep(milliseconds: number) {
+		const date = Date.now();
+		let currentDate = null;
+		do {
+		  currentDate = Date.now();
+		} while (currentDate - date < milliseconds);
+	  }
+
+	onColorUpdate($event: any) {
+		console.log($event);
+		console.log("Event in parent");
 	}
 
 }
