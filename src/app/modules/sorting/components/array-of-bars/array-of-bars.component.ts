@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserParams } from '../../models/UserParams';
 import { UserArrParamsService } from '../../services/user-arr-params.service';
+import { SortTypeService } from "../../services/sort-type.service";
+// models
+import { UserParams } from '../../models/UserParams';
+import { SortType } from "../../models/SortType";
+
+
 
 @Component({
   selector: 'app-array-of-bars',
@@ -16,20 +21,27 @@ export class ArrayOfBarsComponent implements OnInit {
   array: number[] = []; // initialize array 
   max: number = Number.MAX_VALUE; 
 
-  constructor(private paramsService: UserArrParamsService) { }
+  constructor(private paramsService: UserArrParamsService, private sortTypeService: SortTypeService) { }
 
   ngOnInit(): void {
     // these line run on app init
     this.resetArrParams();
     // console.log(this.arrParams);   
 
-    // this.paramsService.currentUserParams.subscribe(params => this.arrParams = params);
+    // user params for array
     this.paramsService.currentUserParams.subscribe(params => {
       console.log("New userParams value:");
       this.arrParams = params;
       this.resetArrParams();
 
     });
+
+    // sort type
+    this.sortTypeService.currentSortType.subscribe(sortType => {
+      this.setSortType(sortType);
+      
+    })
+
   }
 
 
@@ -55,6 +67,49 @@ export class ArrayOfBarsComponent implements OnInit {
     this.max = Math.max(...this.array);
   }
 
+  setSortType(type: SortType) {
+    console.log(`Finally: Sort Type is ${type.name} `);
+
+    switch(type) {
+
+      case SortType.SelectionSort:
+      {
+          console.log("Selection Sort. Begins...");
+      
+          break;
+      }
+      case  SortType.BubbleSort:
+      {
+        console.log("Bubble Sort. Begins...");
+      
+        break;
+      }
+      case  SortType.InsertionSort:
+      {
+        console.log("Insertion Sort. Begins...");
+      
+        break;
+      }
+      case  SortType.MergeSort:
+      {
+        console.log("Merge Sort. Begins...");
+      
+        break;
+      }
+      case  SortType.QuickSort:
+      {
+        console.log("Quick Sort. Begins...");
+      
+        break;
+      }
+  
+      default:
+        console.log("Invalid Sort Type passed");
+        
+    }
+  
+    
+  }
 
   // from MDN reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#Getting_a_random_integer_between_two_values_inclusive
   getRandomIntInclusive(min: number, max: number): number {
@@ -70,6 +125,8 @@ export class ArrayOfBarsComponent implements OnInit {
     }
   }
 
+
+  // sort types
 
   // makes each bar to have variable width, depending on the number of elts in the array
   getBarContainerStyles() {

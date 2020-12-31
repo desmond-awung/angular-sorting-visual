@@ -1,29 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserArrParamsService } from '../../services/user-arr-params.service';
-
+import { SortTypeService } from "../../services/sort-type.service";
 // models
 import { UserParams } from '../../models/UserParams'
-
-
-// enum SortType {
-//   SelectionSort = 1,
-//   BubbleSort,
-//   InsertionSort,
-//   MergeSort,
-//   QuickSort,
-// }
-
-class SortType {
-  name: string;
-
-  constructor(name: string) {
-    this.name = name;
-  }
-
-  toString() {
-    return `SortType.${this.name}`;
-  }
-}
+import { SortType } from "../../models/SortType";
 
 @Component({
   selector: 'app-controls',
@@ -32,14 +12,7 @@ class SortType {
 })
 export class ControlsComponent implements OnInit {
 
-  MySortType = class {
-    static BubbleSort = new SortType('BubbleSort');
-    static InsertionSort = new SortType('InsertionSort');
-    static MergeSort = new SortType('MergeSort');
-    static SelectionSort = new SortType('SelectionSort');
-    static QuickSort = new SortType('QuickSort');
-    static None = new SortType('None');
-  }
+  SortType = SortType;
   // sortType: SortType = SortType.None;
   msg: UserParams = {};
   // array params entered by user
@@ -48,8 +21,8 @@ export class ControlsComponent implements OnInit {
    * arrSize: the size of the array enetered by user (defaults to -1 if not specified)
    */
   arrParams: UserParams = new UserParams();
-  
-  constructor(private paramsService: UserArrParamsService) { }
+
+  constructor(private paramsService: UserArrParamsService, private sortTypeService: SortTypeService) { }
 
   ngOnInit(): void {
     // this.paramsService.currentUserParams.subscribe(params => this.arrParams = params);
@@ -75,46 +48,8 @@ export class ControlsComponent implements OnInit {
 
   sortArray(type: SortType) {
     console.log(type);
-    
-    switch(type.name) {
-
-    case this.MySortType.SelectionSort.name:
-    {
-        console.log("Selection Sort. Begins...");
-    
-        break;
-    }
-    case  this.MySortType.BubbleSort.name:
-    {
-      console.log("Bubble Sort. Begins...");
-    
-      break;
-    }
-    case  this.MySortType.InsertionSort.name:
-    {
-      console.log("Insertion Sort. Begins...");
-    
-      break;
-    }
-    case  this.MySortType.MergeSort.name:
-    {
-      console.log("Merge Sort. Begins...");
-    
-      break;
-    }
-    case  this.MySortType.QuickSort.name:
-    {
-      console.log("Quick Sort. Begins...");
-    
-      break;
-    }
-
-    default:
-      console.log("Invalid Sort Type passed");
-      
-  }
-
-
+    // send the sortType data to the ArrayOfBars component via a service 
+    this.sortTypeService.setSortType(type);
   }
 
 }
