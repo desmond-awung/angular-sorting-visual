@@ -1,39 +1,32 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { UserArrParamsService } from '../../services/user-arr-params.service';
 import { SortTypeService } from "../../services/sort-type.service";
 // models
 import { UserParams } from '../../models/UserParams';
 import { SortType } from "../../models/SortType";
-import { Subject } from 'rxjs';
-// child elt
-import { VerticalBarComponent } from "../vertical-bar/vertical-bar.component";
 
 @Component({
 	selector: 'app-array-of-bars',
 	templateUrl: './array-of-bars.component.html',
 	styleUrls: ['./array-of-bars.component.css']
 })
-export class ArrayOfBarsComponent implements OnInit, AfterViewInit {
-	colorEvent: Subject<number> = new Subject<number>();
-	// msgRcvd: string = "";
-	msgRcvd: UserParams = {};
+export class ArrayOfBarsComponent implements OnInit {
+	@Output() updateColors = new EventEmitter<any>();
+	@Input() element: number = 0;
 	arrParams: UserParams = new UserParams();
 	currIndex: number = 0;
 	arraySize: number = 0;
 	array: number[] = []; // initialize array 
 	max: number = Number.MAX_VALUE;
-	// color = 'turquoise';
-
-	@ViewChild(VerticalBarComponent) singleBar: VerticalBarComponent = new VerticalBarComponent;
-	ngAfterViewInit() {
-		// console.log(this.singleBar.defaultColor);
-		this.singleBar.setVerticalBarStyles(this.currIndex, 'red')
-	}
+	defaultColor: string = 'turquoise';
+	inc: number = 1;
 
 	constructor(private paramsService: UserArrParamsService, private sortTypeService: SortTypeService) { }
 
 	ngOnInit(): void {
 		console.log("$$$Entering array-of-bars component");
+		console.log(this.element);
+		
 		
 		// these line run on app init
 		this.resetArrParams();
@@ -76,6 +69,10 @@ export class ArrayOfBarsComponent implements OnInit, AfterViewInit {
 
 		// console.log(this.array);
 		this.max = Math.max(...this.array);
+	}
+
+	updateArrayValues() {
+
 	}
 
 	setSortType(type: SortType) {
@@ -141,17 +138,67 @@ export class ArrayOfBarsComponent implements OnInit, AfterViewInit {
 		}
 	}
 
-
-	// sort types
-
+	
 	// makes each bar to have variable width, depending on the number of elts in the array
-	getBarContainerStyles() {
+	getContainerStyles() {
+		// console.log("Entering container")
 		let styles = {
 			width: `${100 / this.arraySize}%`
 		}
 		return styles;
 	}
+	
 
+
+	setVerticalBarStyles(currIndex:number, color?: string) {
+		// console.log(`Num elts: `);
+		// console.log(`Bar styles called for: ${this.idx}`);
+		if (color === undefined)
+		  color = 'turquoise';
+
+		// if (this.array[currIndex] > 50) {
+		// 	color = 'red'
+		// 	// this.inc = 0;
+		// }
+		// else 
+		// this.inc++;
+	
+		// if (currIndex !== undefined && this.idx === currIndex)
+		// {
+		//   console.log(`Yesss - index ${currIndex}found. changing color.`)
+		//   color = 'red';
+		// }
+		// this.handleColorChange();
+	
+		// set css class for each array-bar
+		let barStyles = {
+			height: `${(this.array[currIndex]/this.max)*100}%`,  // height is relative to the max element in array 
+			// color: 'red',
+			// width: `${(100/this.numElements)}%`, 
+			// width: '80%', 
+			width: `${50/(this.arraySize+1)}rem`, 
+			margin: `0 ${10/(this.arraySize+1)}rem`, // this works for a max of 200 elts on a medium screen just fine
+			backgroundColor: color,
+			/* border: 0.5px solid black; */
+			/* border: 2px solid red; */
+			display: 'inline',
+			// border: '2px solid black',
+			// minWidth: '2rem',
+			// maxWidth: '3rem'
+		}
+		// console.log("Exiting bar setup");
+		// console.log(barStyles);
+		
+		return barStyles;
+	
+	  }
+	
+	  updatesss() {
+		  this.updateColors.emit();
+	  }
+	//================================================
+	// sort types
+	//================================================
 	/**
 	 * SELECTION SORT
 	 */
@@ -162,11 +209,12 @@ export class ArrayOfBarsComponent implements OnInit, AfterViewInit {
 			let min = this.array[i];
 			let minIndex = i;
 			this.currIndex = i;
-			this.ngAfterViewInit();
 			// this.color = 'red';
 			// setTimeout(() => {}, 2000)
-			if (i === 3)
-				this.sleep(5000);
+			this.updatesss();
+			this.setVerticalBarStyles(i, 'red'); 
+			// if (i === 3)
+				this.sleep(50);
 
 			for (let j=i+1; j<size; j++ ) {
 				// find the min and its index
@@ -183,9 +231,7 @@ export class ArrayOfBarsComponent implements OnInit, AfterViewInit {
 			this.array[i] = this.array[minIndex];
 			this.array[minIndex] = temp;
 			console.log(` >> Current Arr is: ${this.array}`);
-			// this.color = 'turquoise';
-			this.changeSingleBarColor(i);
-			// setTimeout(() => {console.log("Hi");}, 2000)
+			// this.changeSingleBarColor(i);
 			
 		}
 	}
@@ -193,7 +239,6 @@ export class ArrayOfBarsComponent implements OnInit, AfterViewInit {
 	changeSingleBarColor(index: number) {
 		console.log("Change color started");
 		 // 
-		this.colorEvent.next(index);
 	}
 
 	sleep(milliseconds: number) {
@@ -204,9 +249,9 @@ export class ArrayOfBarsComponent implements OnInit, AfterViewInit {
 		} while (currentDate - date < milliseconds);
 	  }
 
-	onColorUpdate($event: any) {
-		console.log($event);
-		console.log("Event in parent");
+	Nana($event: any) {
+		
 	}
+
 
 }

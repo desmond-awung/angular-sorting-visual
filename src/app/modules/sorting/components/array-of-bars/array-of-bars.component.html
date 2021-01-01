@@ -1,14 +1,33 @@
 <div>
-    <app-vertical-bar class="array-container" [ngStyle]="getBarContainerStyles()"
+    <!-- <span class="array-container" [ngStyle]="getContainerStyles()"
+    *ngFor="let element of array; let currIndex = index"
+    [element]="element"
+    [max]="max"
+    [idx]="currIndex"
+    [arraySize]="arraySize"
+    [ngStyle]="setVerticalBarStyles()"> -->
+    <!-- {{ arraySize }} -->
+    <span class="array-container" 
+    [ngStyle]="getContainerStyles()"
+    (updateColors)="Nana($event)"
+    *ngFor="let element of array; let currIndex = index"
+      >
+            <!-- <p>vertical bar wporks</p> -->
+            <span [ngStyle]="setVerticalBarStyles(currIndex)"> {{ element }} </span>
+        </span>
+    <!-- <app-vertical-bar></app-vertical-bar> -->
+</div>
+
+<!-- <div>
+    <span class="array-container" [ngStyle]="getContainerStyles()"
         *ngFor="let element of array; let currIndex = index"
         [element]="element"
         [max]="max"
         [idx]="currIndex"
         [arraySize]="arraySize"
-        [events]="colorEvent.asObservable()"
-        (handleColorChange)="onColorUpdate($event)"
+        [ngStyle]="setVerticalBarStyles()">
         >
-    </app-vertical-bar>
+            <span> {{ element }} </span>
+        </span>
     {{ arraySize }}
-    <!-- <app-vertical-bar></app-vertical-bar> -->
-</div>
+</div> -->
